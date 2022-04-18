@@ -37,7 +37,7 @@
   }
 }
 .form{
-  background-color: darkgrey;
+  background-color: lightgray;
   width: 500px;
   margin:50px auto;
   border:1px solid black;
@@ -53,4 +53,9 @@
 
 .form input {
   padding: 15px;
+}
+
+.author {
+  color:darkcyan;
+  font-weight: bold;
 }
