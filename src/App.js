@@ -1,18 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css';
-import {Form} from'./components/FormFunc/Form';
+import {Form} from'./components/formComponents/Form';
 
-//классовый подход
-// export class App extends Component {
-//   render (){
-//     return <Form/>;
-//   }
-// }
-
-
+const theme = createTheme(
+    {
+        palette:{
+            primary: {
+                main: '##26a69a',
+                light: '#80cbc4',
+            }
+        },
+        typography: {
+            fontSize: 20,
+        }       
+    }
+)
 
 export const App = ()=>{
-  return <>
-  <Form />
-  </>
+ return  (
+     <>
+    <ThemeProvider theme={theme}>
+        <Form />
+    </ThemeProvider>
+    </>)
 }
