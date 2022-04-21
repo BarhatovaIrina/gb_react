@@ -1,10 +1,20 @@
 import  React, {useState, useEffect} from 'react';
-import {Input} from './Input';
-import {Button} from './Button';
+import { InputComponent} from './InputComponent';
 import { MessageList } from './MessageList';
 import { AUTHOR } from './constants';
+import { ButtonComponent } from './ButtonComponent';
+import { nanoid } from 'nanoid';
+import PropTypes from 'prop-types';
 
 export const Form = ()=> {
+    Form.propTypes = {
+        handleSubmitForm: PropTypes.func,
+        handleChangeText: PropTypes.func,
+        text: PropTypes.string,
+        author: PropTypes.string,
+        id: PropTypes.number,
+    }
+
     const [text, setText] = useState ('');
     const [messages, setMessages] = useState ([]);
 
@@ -14,6 +24,7 @@ export const Form = ()=> {
                 setMessages(
                     [...messages,
                     {
+                        id: nanoid(),
                         author: AUTHOR.BOT,
                         text: `USER wroted a message`
                     }
@@ -30,14 +41,13 @@ export const Form = ()=> {
    
     const handleSubmitForm =(e) =>{
         e.preventDefault();
-        console.log(text);
-       const message ={
-            text: text,
-            author:AUTHOR.USER
-        };
-        setMessages([...messages, message]);
-        setText('');
-        
+        const message ={
+                id: nanoid(),
+                text: text,
+                author:AUTHOR.USER
+            };
+            setMessages([...messages, message]);
+            setText('');  
     }
 
     const handleChangeText = (ev) =>{
@@ -45,11 +55,11 @@ export const Form = ()=> {
     }
     
     return <>
-    <form className='form' onSubmit={handleSubmitForm}>
+     <form className='form' onSubmit={handleSubmitForm}>
         <MessageList  messages = {messages}/>
-        <Input type='text' name='author' change={handleChangeText} value={text}/>
-        <Button disabled={!text} />
-    </form>
-    </> 
+        <InputComponent type='text' name='author' change={handleChangeText} value={text}/>
+        <ButtonComponent disabled={!text} />
+     </form>
+     </> 
     
     }

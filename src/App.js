@@ -1,12 +1,27 @@
 import React from 'react';
-// import { fireEvent, render, screen } from '@testing-library/react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css';
+import {Form} from'./components/formComponents/Form';
 
-import {Form} from'./components/dz-2/Form';
-
+const theme = createTheme(
+    {
+        palette:{
+            primary: {
+                main: '##26a69a',
+                light: '#80cbc4',
+            }
+        },
+        typography: {
+            fontSize: 20,
+        }       
+    }
+)
 
 export const App = ()=>{
- return <>
-  <Form />
- </>
+ return  (
+     <>
+    <ThemeProvider theme={theme}>
+        <Form />
+    </ThemeProvider>
+    </>)
 }
