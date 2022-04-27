@@ -1,0 +1,68 @@
+ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0;
+}
+li{
+    padding: 0;
+}
+li a {
+    display: block;
+    width: 100px;
+    height: 40px;
+    background: lightgray;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    color: black;
+}
+
+.del{
+    width:40px;
+    height: 50px;
+    margin-top: -5px;
+}
+
+.chat {
+    display: flex;
+    flex-direction: row;
+}
+
+.chat_list {
+    background: rgb(226, 244, 244);
+    padding: 10px;
+    width:20%;
+}
+.message_list {
+    background: rgb(236, 236, 236);
+    padding: 10px;
+    width:75%;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+h2{
+    color: darkcyan;
+}
+.USER {
+    align-self: flex-end;
+    background-color: lightgray;
+    border:1px solid grey;
+    border-radius: 10px;
+    margin:10px;
+    padding: 10px;
+    width:80%;
+  }
+
+.BOT {
+    align-self: flex-start;
+    background-color: lightgray;
+    border:1px solid grey;
+    border-radius: 10px;
+    margin:10px;
+    padding: 10px;
+    width:80%;
+  }

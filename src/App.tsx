@@ -1,14 +1,17 @@
 import React, { FC, useState, useMemo } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
+import { defaultContext, ThemeContext } from './utils/ThemeContext';
 import './App.css';
 import { Header } from './components/Header';
 import { Chats } from './pages/Chats';
 import { Home } from './pages/Home';
+import { NoPage } from './pages/404';
 import { Profile } from './pages/Profile';
 import { ChatList } from './components/ChatList';
 import { AUTHOR } from './constants';
 import { nanoid } from 'nanoid';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 export interface Chat {
   id: string;
@@ -20,7 +23,7 @@ const initialMessage: Messages = {
     {
       id: '1',
       author: AUTHOR.USER,
-      value: 'Hello geekbrains',
+      value: 'Hello!',
     },
   ],
 };
@@ -37,7 +40,7 @@ export interface Messages {
 
 export const App: FC = () => {
   const [messages, setMessages] = useState<Messages>(initialMessage);
-
+  const [theme, setTheme] = useState (defaultContext.theme);
   const chatList = useMemo(
     () =>
       Object.entries(messages).map((chat) => ({
@@ -63,13 +66,23 @@ export const App: FC = () => {
       ...mes,
     });
   }
+  const toggleTheme = () =>{
+    setTheme(theme==='light' ? 'dark' : 'light')
+  }
+
   return (
-    
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Header />}>
-          <Route index element={<Home />} />
-          <Route path="profile" element={<Profile />} />
+    <Provider store={store}>
+      <ThemeContext.Provider value={
+        {
+          theme,
+          toggleTheme
+        }
+      }>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Header />}>
+            <Route index element={<Home />} />
+            <Route path="profile" element={<Profile />} />
 
           <Route path="chats">
             <Route
@@ -95,8 +108,10 @@ export const App: FC = () => {
           </Route>
         </Route>
 
-        <Route path="*" element={<h2>404</h2>} />
+        <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
+    </ThemeContext.Provider>
+    </Provider>
   );
 };

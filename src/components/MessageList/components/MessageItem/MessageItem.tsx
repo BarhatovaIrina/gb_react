@@ -1,4 +1,5 @@
 import React, { FC, memo } from 'react';
+import { AUTHOR } from '../../../../constants';
 
 export interface Message {
   id: string;
@@ -11,7 +12,7 @@ interface MessageProps {
 }
 
 export const MessageItem: FC<MessageProps> = memo(({ message }) => (
-  <li>
-    {message.author}: {message.value}
-  </li>
+//  style={({ isActive }) => ({ color: isActive ? 'darkcyan' : 'black' })}
+    <div className={message.author === AUTHOR.USER ? 'USER' : 'BOT'}>
+      {message.author}: {message.value}</div>
 ));
