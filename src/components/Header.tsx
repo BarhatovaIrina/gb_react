@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
+// import  './Header.css';
+
 
 const navigate = [
   {
@@ -20,15 +22,13 @@ const navigate = [
 ];
 
 export const Header: FC = () => (
-    
     <header>
-     
-     <ul style={{ display: 'flex', justifyContent: 'space-around' }}>
+     <ul>
          {navigate.map((link) => (
           <li key={link.id}>
             <NavLink
               to={link.to}
-              style={({ isActive }) => ({ color: isActive ? 'green' : 'blue' })}
+              style={({ isActive }) => ({ color: isActive ? 'darkcyan' : 'black' })}
             >
               {link.name}
             </NavLink>

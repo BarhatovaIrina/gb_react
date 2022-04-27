@@ -74,10 +74,18 @@ export const Chats: FC<ChatsProps> = ({
 
   return (
     <>
-    <p>sdfsfsf</p>
-      <ChatList chatList={chatList} onAddChat={onAddChat} onDelChat={onDelChat} />
-      <MessageList messages={chatId ? messages[chatId] : []} />
-      <Form addMessage={addMessage} />
+    <div className='chat'>
+      <div className='chat_list'>
+        <h2>Chat List</h2>
+        <ChatList chatList={chatList} onAddChat={onAddChat} onDelChat={onDelChat} />
+      </div>
+      
+      <div className='message_list '>
+        <h2>Message List</h2>
+        <MessageList messages={chatId ? messages[chatId] : []} />
+        <Form addMessage={addMessage} />
+      </div>
+    </div>
     </>
   );
 };

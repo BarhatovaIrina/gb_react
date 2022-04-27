@@ -3,6 +3,8 @@ import { Chat } from '../App';
 import { Link } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import { ListItem } from '@mui/material';
+import  './Header.css';
+import { padding } from '@mui/system';
 
 interface ChatListProps {
   chatList: Chat[];
@@ -27,14 +29,15 @@ export const ChatList: FC<ChatListProps> = ({ chatList, onAddChat, onDelChat }) 
 
   return (
     <>
-      <ul>
+    <div>
+      <div>
         {chatList.map((chat) => (
-          <ListItem key={chat.id}>
+          <ListItem key={chat.id} style={{padding:'0'}}>
             <Link to={`/chats/${chat.name}`}>{chat.name}</Link>
-            <button onClick={()=>onDelChat(chat.name)}>X</button>
+            <button onClick={()=>onDelChat(chat.name)} className="del">X</button>
           </ListItem>
         ))}
-      </ul>
+      </div>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -43,6 +46,7 @@ export const ChatList: FC<ChatListProps> = ({ chatList, onAddChat, onDelChat }) 
         />
         <button type="submit">add chat</button>
       </form>
+      </div>
     </>
   );
 };
