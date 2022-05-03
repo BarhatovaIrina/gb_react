@@ -2,8 +2,7 @@ import { ThemeContext } from './../utils/ThemeContext';
 import React, { FC, useContext, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeName,toggleProfile} from '../store/profile/actions';
-import { store } from '../store';
-import { ProfileState } from '../store/profile/reducer';
+import { selectName, selectVisible } from '../store/profile/selectors';
 
 export const Profile: FC = () => 
 {
@@ -11,8 +10,9 @@ export const Profile: FC = () =>
     const dispatch = useDispatch();
     const [value, setValue] = useState('');
     
-    const visible = useSelector((state: ProfileState) => state.visible); 
-    const name = useSelector((state: ProfileState) => state.name); 
+    const visible = useSelector(selectVisible);
+    const name = useSelector(selectName);
+
     return (
         <>
         <div>
@@ -23,7 +23,7 @@ export const Profile: FC = () =>
        <div>
           <p>{name}</p> 
             <input type="checkbox" checked={visible}/>
-            <button onClick={() => store.dispatch(toggleProfile())}>
+            <button onClick={() => dispatch(toggleProfile())}>
                change visible
             </button>
 

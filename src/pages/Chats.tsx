@@ -1,28 +1,17 @@
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC } from 'react';
 import { MessageList } from './../components/MessageList/MessageList';
 import { Form } from './../components/Form/Form';
-import { nanoid } from 'nanoid';
-import { AUTHOR } from '../constants';
 import { ChatList } from '../components/ChatList';
-import { Chat, Messages } from '../App';
 import { Navigate, useParams } from 'react-router-dom';
+import { shallowEqual, useSelector } from 'react-redux';
+import { selectChatList, selectChats } from '../store/chats/selectors';
 
-interface ChatsProps {
-  messages: Messages;
-  setMessages: React.Dispatch<React.SetStateAction<Messages>>;
-  chatList: Chat[];
-  onAddChat: (chats: Chat) => void;
-  onDelChat: (chatName: string) => void;
-}
-export const Chats: FC<ChatsProps> = ({
-  chatList,
-  onAddChat,
-  onDelChat,
-  messages,
-  setMessages,
-}) => {
+export const Chats: FC = () => {
   const { chatId } = useParams();
-
+  const chats = useSelector(selectChats, shallowEqual);
+  const chatList = useSelector(selectChatList, shallowEqual);
+  
+  /*
   useEffect(() => {
     if (
       chatId &&
@@ -48,44 +37,25 @@ export const Chats: FC<ChatsProps> = ({
       };
     }
   }, [chatId, messages, setMessages]);
-
-  const addMessage = useCallback(
-    (value: string) => {
-      if (chatId) {
-        setMessages((prevMessage) => ({
-          ...prevMessage,
-          [chatId]: [
-            ...prevMessage[chatId],
-            {
-              id: nanoid(),
-              author: AUTHOR.USER,
-              value,
-            },
-          ],
-        }));
-      }
-    },
-    [chatId, setMessages]
-  );
-
+*/
+  
   if (!chatList.find((chat) => chat.name === chatId)) {
     return <Navigate replace to="/chats" />;
   }
 
   return (
-    <>
     <div className='chat'>
       <div className='chat_list'>
         <h2>Chat List</h2>
-        <ChatList chatList={chatList} onAddChat={onAddChat} onDelChat={onDelChat} />
+        <ChatList  />
       </div>
       
       <div className='message_list '>
         <h2>Message List</h2>
-        <MessageList messages={chatId ? messages[chatId] : []} />
-        <Form addMessage={addMessage} />
+        {/* < MessageList messages={chats[1]} /> */}
+        <MessageList messages={chatId ? chats[chatId] : []} />
+        <Form />
       </div>
     </div>
-    </>
   );
-};
+}
