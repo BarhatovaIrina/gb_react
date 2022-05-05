@@ -2,17 +2,21 @@ import React, { useState, FC, memo } from 'react';
 import { Button } from './Button';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { addMessage } from '../../store/chats/actions';
+import { addMessageWithReply } from '../../store/chats/actions';
+import { AddMessage } from '../../store/chats/types';
+import { ChatsState } from '../../store/chats/reducer';
+import { ThunkDispatch } from 'redux-thunk';
+import { AUTHOR } from '../../constants';
 
 export const Form: FC = memo(() => {
   const [value, setValue] = useState('');
   const { chatId } = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<ChatsState, void, ReturnType<AddMessage>>>();
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (chatId) {
-      dispatch(addMessage(chatId, value));
+    if (chatId && value) {
+      dispatch(addMessageWithReply(chatId, { text: value, author: AUTHOR.USER }));
     }
     setValue('');
   };

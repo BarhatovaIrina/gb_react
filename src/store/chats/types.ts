@@ -18,9 +18,20 @@ export type DeleteChat = (
 
 export type AddMessage = (
     chatID: string, 
-    message: string
+    message: Message
 ) => {
     type: typeof ADD_MESSAGE;
     chatId: string;
-    message: string;
+    message: Message;
 }
+
+export type Message = {
+    text: string;
+    author: string;
+  };
+
+  export type MessageState = Message & {
+    id: string;
+  };
+
+//   export type AddMesssageWithReply = ()
