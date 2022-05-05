@@ -52,7 +52,6 @@ export const Chats: FC = () => {
       
       <div className='message_list '>
         <h2>Message List</h2>
-        {/* < MessageList messages={chats[1]} /> */}
         <MessageList messages={chatId ? chats[chatId] : []} />
         <Form />
       </div>

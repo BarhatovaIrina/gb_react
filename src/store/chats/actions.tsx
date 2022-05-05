@@ -1,4 +1,6 @@
-import { AddChat, DeleteChat, AddMessage } from "./types";
+import { AddChat, DeleteChat, AddMessage, Message } from "./types";
+import { Dispatch } from 'redux';
+import { AUTHOR } from "../../constants";
 
 export const ADD_CHAT = 'CHARTS::ADD_CHAT';
 export const DELETE_CHAT = 'CHARTS::DELETE_CHAT';
@@ -19,3 +21,27 @@ export const addMessage: AddMessage = (chatId, message) => ({
     chatId,
     message,
 })
+
+let timeout: NodeJS.Timeout;
+
+export const addMessageWithReply =
+  (chatId: string, message: Message) =>
+  (dispatch: Dispatch<ReturnType<AddMessage>>) => {
+    dispatch(addMessage(chatId, message));
+
+    if (message.author !== AUTHOR.BOT) {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+
+      timeout = setTimeout(() => {
+        dispatch(
+          addMessage(chatId, 
+            {
+            text: 'Im BOT',
+            author: AUTHOR.BOT,
+            })
+        );
+      }, 1000);
+    }
+  };
